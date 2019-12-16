@@ -20,6 +20,8 @@ services:
     - RABBITMQ_HOST=localhost
     - RABBITMQ_USER=guest
     - RABBITMQ_PASSWORD=guest
+    - JWT_SECRET=blank
+    - JWT_ALGORITHM=blank
     ports:
     - 8080:80  # for gunicorn
     - 15672:15672  # for rabbitmq management plugin
