@@ -4,6 +4,8 @@ services:
     image: mongo
     container_name: "mongodb"
     command: [--auth]
+    volumes:
+    - ./mongo-user:/docker-entrypoint-initdb.d:z
     environment:
     - MONGO_INITDB_ROOT_USERNAME=cteadmin
     - MONGO_INITDB_ROOT_PASSWORD=cteadmin
