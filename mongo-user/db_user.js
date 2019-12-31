@@ -10,3 +10,27 @@ if (db.getUser('cteadmin') == null) {
         }]
     });
 }
+
+db.schedules.insert({
+    "_cls": "PeriodicTask",
+    "name": "INTERNAL INDICATOR AGING TASK",
+    "enabled": True,
+    "args": [],
+    "task": "cte.tasks.indicator_aging_task.age_indicators",
+    "interval": {
+        "every": 12,
+        "period": "hours",
+    },
+})
+
+db.users.insert({
+    username: "admin",
+    password: "$2y$12$hwULodJIcg6ncfRgjWkqnOcJFEcSEk3zMiIyjxQLgRZwXbROVilF.",
+    scopes: ["read", "write"]
+});
+
+db.users.insert({
+    username: "user",
+    password: "$2y$12$hwULodJIcg6ncfRgjWkqnOcJFEcSEk3zMiIyjxQLgRZwXbROVilF.",
+    scopes: ["read"]
+});
