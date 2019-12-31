@@ -14,7 +14,7 @@ if (db.getUser('cteadmin') == null) {
 db.schedules.insert({
     "_cls": "PeriodicTask",
     "name": "INTERNAL INDICATOR AGING TASK",
-    "enabled": True,
+    "enabled": true,
     "args": [],
     "task": "cte.tasks.indicator_aging_task.age_indicators",
     "interval": {
