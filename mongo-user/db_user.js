@@ -31,11 +31,13 @@ db.settings.insert({
 db.users.insert({
     username: "admin",
     password: "$2y$12$hwULodJIcg6ncfRgjWkqnOcJFEcSEk3zMiIyjxQLgRZwXbROVilF.",
-    scopes: ["read", "write", "me"]
+    scopes: ["read", "write", "me"],
+    firstLogin: true
 });
 
 db.users.insert({
     username: "user",
     password: "$2y$12$hwULodJIcg6ncfRgjWkqnOcJFEcSEk3zMiIyjxQLgRZwXbROVilF.",
-    scopes: ["read", "me"]
+    scopes: ["read", "me"],
+    firstLogin: true
 });
