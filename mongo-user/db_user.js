@@ -24,20 +24,25 @@ db.schedules.insert({
 })
 
 db.settings.insert({
-    proxy: null,
+    proxy: {
+        scheme: "http",
+        server: "",
+        username: "",
+        password: ""
+    },
     logLevel: "info"
 })
 
 db.users.insert({
     username: "admin",
-    password: "$2y$12$hwULodJIcg6ncfRgjWkqnOcJFEcSEk3zMiIyjxQLgRZwXbROVilF.",
+    password: "$2y$12$RBcV6xWFhHucm4a1YRmQXuEZHqz9NadpMuzIB6xEIXOhg.QzngiiO",
     scopes: ["read", "write", "me"],
     firstLogin: true
 });
 
 db.users.insert({
-    username: "user",
-    password: "$2y$12$hwULodJIcg6ncfRgjWkqnOcJFEcSEk3zMiIyjxQLgRZwXbROVilF.",
+    username: "socadmin",
+    password: "$2y$12$t1N0ap52uH3H8rZjplgVbebF48uerZQH/RbjEGKSOnwryz61y7KiK",
     scopes: ["read", "me"],
     firstLogin: true
 });
