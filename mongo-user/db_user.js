@@ -33,6 +33,10 @@ db.settings.insert({
     logLevel: "info"
 })
 
+db.indicators.createIndex({ reputation: -1 })
+db.indicators.createIndex({ externalHits: -1 })
+db.indicators.createIndex({ lastSeen: -1 })
+
 db.users.insert({
     username: "admin",
     password: "$2y$12$RBcV6xWFhHucm4a1YRmQXuEZHqz9NadpMuzIB6xEIXOhg.QzngiiO",
