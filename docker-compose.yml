@@ -9,6 +9,7 @@ services:
     environment:
       - MONGO_INITDB_ROOT_USERNAME=cteadmin
       - MONGO_INITDB_ROOT_PASSWORD=cteadmin
+    restart: on-failure:5
     ports:
       - 27017:27017
   core:
@@ -24,6 +25,7 @@ services:
       - RABBITMQ_PASSWORD=guest
       - JWT_SECRET=secret
       - JWT_ALGORITHM=HS256
+    restart: on-failure:5
     ports:
       - 8080:80 # for gunicorn
       - 15672:15672 # for rabbitmq management plugin
@@ -32,6 +34,7 @@ services:
   ui:
     image: shivangcrest/netskope_cte:ui-S4-1.0.0_10
     container_name: "ui"
+    restart: on-failure:5
     ports:
       - 3000:3000
     links:
