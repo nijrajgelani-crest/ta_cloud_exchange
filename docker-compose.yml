@@ -16,7 +16,7 @@ services:
     image: shivangcrest/netskope_cte:core-S4-1.0.0_13
     container_name: "core"
     volumes:
-      - ./public_plugins:/opt/cte/public_plugins
+      - ./custom_plugins:/opt/cte/custom_plugins
     environment:
       - MONGO_HOST=mongodb
       - MONGO_PORT=27017
