@@ -16,7 +16,7 @@ services:
     image: shivangcrest/netskope_cte:core-S4-1.0.0_13
     container_name: "core"
     volumes:
-      - ./custom_plugins:/opt/cte/custom_plugins
+      - ./custom_plugins:/opt/cte/custom_plugins:z
     environment:
       - MONGO_HOST=mongodb
       - MONGO_PORT=27017
@@ -29,7 +29,6 @@ services:
       - JWT_ALGORITHM=HS256
     restart: on-failure:5
     ports:
-      - 8080:80 # for gunicorn
       - 15672:15672 # for rabbitmq management plugin
     links:
       - mongodb
@@ -37,6 +36,8 @@ services:
     image: shivangcrest/netskope_cte:ui-S4-1.0.0_10
     container_name: "ui"
     restart: on-failure:5
+    volumes:
+      - ./ssl_certs:/tmp/ssl_certs:z
     ports:
       - 3000:3000
     links:
