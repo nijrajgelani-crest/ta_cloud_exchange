@@ -41,13 +41,7 @@ db.indicators.createIndex({ lastSeen: -1 })
 db.users.insert({
     username: "admin",
     password: "$2y$12$RBcV6xWFhHucm4a1YRmQXuEZHqz9NadpMuzIB6xEIXOhg.QzngiiO",
-    scopes: ["read", "write", "me"],
-    firstLogin: true
-});
-
-db.users.insert({
-    username: "socadmin",
-    password: "$2y$12$t1N0ap52uH3H8rZjplgVbebF48uerZQH/RbjEGKSOnwryz61y7KiK",
-    scopes: ["read", "me"],
+    scopes: ["admin", "read", "write", "me"],
+    tokens: [],
     firstLogin: true
 });
