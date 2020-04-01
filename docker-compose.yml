@@ -13,7 +13,7 @@ services:
     ports:
       - 27017:27017
   core:
-    image: shivangcrest/netskope_cte:core-S4-1.0.0_13
+    image: crestsystems/netskope:core-latest
     container_name: "core"
     volumes:
       - ./custom_plugins:/opt/cte/custom_plugins:z
@@ -33,7 +33,7 @@ services:
     links:
       - mongodb
   ui:
-    image: shivangcrest/netskope_cte:ui-S4-1.0.0_10
+    image: crestsystems/netskope:ui-latest
     container_name: "ui"
     restart: on-failure:5
     volumes:
