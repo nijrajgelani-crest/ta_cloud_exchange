@@ -5,7 +5,7 @@ services:
     container_name: "mongodb"
     command: [--auth]
     volumes:
-      - ./mongo-user:/docker-entrypoint-initdb.d:z
+      - ./data/mongo-user:/docker-entrypoint-initdb.d:z
     environment:
       - MONGO_INITDB_ROOT_USERNAME=cteadmin
       - MONGO_INITDB_ROOT_PASSWORD=cteadmin
@@ -16,7 +16,7 @@ services:
     image: crestsystems/netskope:core-latest
     container_name: "core"
     volumes:
-      - ./custom_plugins:/opt/cte/custom_plugins:z
+      - ./data/custom_plugins:/opt/cte/custom_plugins:z
     environment:
       - MONGO_HOST=mongodb
       - MONGO_PORT=27017
@@ -37,7 +37,7 @@ services:
     container_name: "ui"
     restart: on-failure:5
     volumes:
-      - ./ssl_certs:/tmp/ssl_certs:z
+      - ./data/ssl_certs:/tmp/ssl_certs:z
     ports:
       - 3000:3000
     links:
