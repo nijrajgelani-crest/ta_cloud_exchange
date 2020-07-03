@@ -16,7 +16,7 @@ services:
     image: crestsystems/netskope:core-latest
     container_name: "core"
     volumes:
-      - ./data/custom_plugins:/opt/cte/custom_plugins:z
+      - ./data/custom_plugins:/opt/netskope/integrations/cte/custom_plugins:z
     environment:
       - MONGO_HOST=mongodb
       - MONGO_PORT=27017
