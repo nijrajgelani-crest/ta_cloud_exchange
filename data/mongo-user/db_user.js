@@ -31,7 +31,11 @@ db.settings.insert({
         password: ""
     },
     logLevel: "info",
-    databaseVersion: "2.0.0"
+    databaseVersion: "2.0.0",
+    platforms: {
+        cte: true,
+        itsm: true
+    }
 })
 
 db.indicators.createIndex({ reputation: -1 })
