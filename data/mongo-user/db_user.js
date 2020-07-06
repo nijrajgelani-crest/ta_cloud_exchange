@@ -33,8 +33,8 @@ db.settings.insert({
     logLevel: "info",
     databaseVersion: "2.0.0",
     platforms: {
-        cte: true,
-        itsm: true
+        cte: false,
+        itsm: false
     }
 })
 
