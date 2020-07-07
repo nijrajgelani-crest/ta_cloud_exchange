@@ -16,7 +16,7 @@ db.schedules.insert({
     name: "INTERNAL INDICATOR AGING TASK",
     enabled: true,
     args: [],
-    task: "cte.tasks.indicator_aging_task.age_indicators",
+    task: "cte.age_indicators",
     interval: {
         every: 12,
         period: "hours",
