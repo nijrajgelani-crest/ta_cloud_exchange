@@ -23,6 +23,30 @@ db.schedules.insert({
     },
 })
 
+db.schedules.insert({
+    _cls: "PeriodicTask",
+    name: "INTERNAL UNMUTE TASK",
+    enabled: true,
+    args: [],
+    task: "itsm.unmute",
+    interval: {
+        every: 5,
+        period: "minutes",
+    },
+})
+
+db.schedules.insert({
+    _cls: "PeriodicTask",
+    name: "INTERNAL ALERT CLEANUP TASK",
+    enabled: true,
+    args: [],
+    task: "itsm.delete_alerts",
+    interval: {
+        every: 12,
+        period: "hours",
+    },
+})
+
 db.settings.insert({
     proxy: {
         scheme: "http",
