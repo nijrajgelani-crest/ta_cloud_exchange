@@ -56,6 +56,7 @@ db.settings.insert({
     },
     logLevel: "info",
     databaseVersion: "2.0.0",
+    alertCleanup: 7,
     platforms: {
         cte: false,
         itsm: false
