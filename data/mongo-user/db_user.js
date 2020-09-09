@@ -55,7 +55,7 @@ db.settings.insert({
         password: ""
     },
     logLevel: "info",
-    databaseVersion: "2.0.0",
+    databaseVersion: "1.3.0",
     alertCleanup: 7,
     platforms: {
         cte: false,
