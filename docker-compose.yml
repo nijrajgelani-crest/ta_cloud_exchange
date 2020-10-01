@@ -6,7 +6,7 @@ services:
     command: [--auth]
     volumes:
       - ./data/mongo-user:/docker-entrypoint-initdb.d:z
-      - ./data/mongo-data:/data/db
+      - ./data/mongo-data:/data/db:z
     environment:
       - MONGO_INITDB_ROOT_USERNAME=cteadmin
       - MONGO_INITDB_ROOT_PASSWORD=cteadmin
