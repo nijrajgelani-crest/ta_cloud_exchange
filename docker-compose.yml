@@ -40,6 +40,6 @@ services:
     volumes:
       - ./data/ssl_certs:/tmp/ssl_certs:z
     ports:
-      - 3000:3000
+      - 443:3000
     links:
       - core
