@@ -1,5 +1,6 @@
 #!/bin/bash
 
+set -e
 MONGO_DIR="./data/mongo-data"
 
 if [ ! -d "$MONGO_DIR" ]; then
