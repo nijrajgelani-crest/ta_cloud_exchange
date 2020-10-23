@@ -5,13 +5,16 @@ MONGO_DIR="./data/mongo-data"
 
 if [ ! -d "$MONGO_DIR" ]; then
     echo "Stopping running containers"
-    docker-compose stop
+    docker stop core ui mongodb
     echo "Extracting databse from existing container"
     docker cp mongodb:/data/db "./data"
     mv "./data/db" $MONGO_DIR
-    docker-compose rm -f
+    echo "Removing previous containers"
+    docker rm -f core ui mongodb
+    echo "Pulling latest images"
     docker-compose pull
     docker-compose up -d
+    echo "Migrating database schema"
     docker cp database-migrate.py core:/opt
     docker exec -ti core python /opt/database-migrate.py
 else
