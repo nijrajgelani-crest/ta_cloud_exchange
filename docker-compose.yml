@@ -30,8 +30,8 @@ services:
       - RABBITMQ_PASSWORD=guest
       - JWT_SECRET=secret
       - JWT_ALGORITHM=HS256
-      - DOCKER_USERNAME=crestsystems
-      - DOCKER_PASSWORD=Cre$$t#123
+      - DOCKER_USERNAME=DOCKER_USERNAME
+      - DOCKER_PASSWORD=DOCKER_PASSWORD
       - WATCHTOWER_HTTP_API_TOKEN=token
     restart: on-failure:5
     ports:
