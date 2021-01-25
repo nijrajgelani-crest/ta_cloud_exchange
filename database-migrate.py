@@ -55,11 +55,27 @@ connector.collection(Collections.SCHEDULES).update_one(
     upsert=True,
 )
 
+# Update task
+connector.collection(Collections.SCHEDULES).update_one(
+    {"name": "INTERNAL UPDATE TASK"},
+    {
+        "$set": {
+            "_cls": "PeriodicTask",
+            "name": "INTERNAL UPDATE TASK",
+            "enabled": True,
+            "args": [],
+            "task": "common.check_updates",
+            "interval": {"every": 12, "period": "hours"},
+        }
+    },
+    upsert=True,
+)
+
 connector.collection(Collections.SETTINGS).update_one(
     {},
     {
         "$set": {
-            "databaseVersion": "1.3.0",
+            "databaseVersion": "2.0.0",
             "alertCleanup": 7,
             "platforms": {"cte": True, "itsm": False},
         }
@@ -71,4 +87,36 @@ connector.collection(Collections.SCHEDULES).update_many(
     {"$set": {"task": "cte.execute_plugin"}},
 )
 
-print("Successfully migrated database to version 1.3.0")
+# update plugins
+connector.collection(Collections.CONFIGURATIONS).update_many({""})
+
+
+def update_plugin_field(collection):
+    """Update plugin field values to match new format."""
+    for configuration in connector.collection(collection).find({}):
+        if configuration.get("name").startswith("netskope.plugins.Default"):
+            continue
+        connector.collection(collection).update_one(
+            {"name": configuration.get("name")},
+            {
+                "$set": {
+                    "plugin": f"netskope.plugins.Default.{configuration.get('plugin')}.main",
+                    "tenant": None,
+                }
+            },
+        )
+
+
+update_plugin_field(Collections.CONFIGURATIONS)
+update_plugin_field(Collections.ITSM_CONFIGURATIONS)
+
+
+for configuration in connector.collection(Collections.CONFIGURATIONS).find({}):
+    if configuration.get("plugin") not in [
+        "netskope.plugins.Default.netskope.main",
+        "netskope.plugins.Default.netskope_itsm.main",
+    ]:
+        continue
+
+
+print("Successfully migrated database to version 2.0.0")
