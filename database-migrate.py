@@ -94,9 +94,6 @@ connector.collection(Collections.SCHEDULES).update_many(
     {"$set": {"task": "cte.execute_plugin"}},
 )
 
-# update plugins
-connector.collection(Collections.CONFIGURATIONS).update_many({""})
-
 
 def update_plugin_field(collection):
     """Update plugin field values to match new format."""
