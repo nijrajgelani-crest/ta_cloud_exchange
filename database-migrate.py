@@ -169,7 +169,7 @@ for rule in connector.collection(Collections.ITSM_BUSINESS_RULES).find({}):
                 continue
             config = connector.collection(
                 Collections.ITSM_CONFIGURATIONS
-            ).find({"name": name})
+            ).find_one({"name": name})
             if config is None:
                 continue
             item["mappings"] = config.get("mappings", [])
