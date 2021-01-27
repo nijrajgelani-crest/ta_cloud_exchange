@@ -154,9 +154,29 @@ for configuration in connector.collection(
         tenant_config = TenantIn(name=tenant, tenantName=tenant, token=token)
         loop.run_until_complete(create_tenant(tenant_config))
         tenant_config = tenant_config.dict()
-    connector.collection(Collections.CONFIGURATIONS).update_one(
+    connector.collection(Collections.ITSM_CONFIGURATIONS).update_one(
         {"name": configuration.get("name")},
         {"$set": {"tenant": tenant_config.get("name")}},
     )
+
+
+# update business rules with mappings
+for rule in connector.collection(Collections.ITSM_BUSINESS_RULES).find({}):
+    queues = rule.get("queues", {})
+    for name, items in queues.items():
+        for item in items:
+            if "mappings" in item:  # already new mapping
+                continue
+            config = connector.collection(
+                Collections.ITSM_CONFIGURATIONS
+            ).find({"name": name})
+            if config is None:
+                continue
+            item["mappings"] = config.get("mappings", [])
+    connector.collection(Collections.ITSM_BUSINESS_RULES).update_one(
+        {"name", rule.get("name")},
+        {"$set": {"queues": rule.get("queues", {})}},
+    )
+
 
 print("Successfully migrated database to version 2.0.0")
