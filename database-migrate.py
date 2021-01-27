@@ -14,9 +14,13 @@ to CE 3.0.0.
 > docker cp migrate.py core:/opt
 > docker exec -ti core python /opt/migrate.py
 """
+import asyncio
 
 from netskope.common.utils import DBConnector, Collections
+from netskope.common.models import TenantIn
+from netskope.common.api.routers.tenants import create_tenant
 
+loop = asyncio.get_event_loop()
 connector = DBConnector()
 # update aging task for CTE
 connector.collection(Collections.SCHEDULES).update_one(
@@ -77,7 +81,10 @@ connector.collection(Collections.SETTINGS).update_one(
         "$set": {
             "databaseVersion": "2.0.0",
             "alertCleanup": 7,
-            "platforms": {"cte": True, "itsm": False},
+            "ssoEnable": False,
+            "ssosaml": {},
+            "enableUpdateChecking": True,
+            "platforms": {"cte": True, "itsm": True},
         }
     },
 )
@@ -110,13 +117,49 @@ def update_plugin_field(collection):
 update_plugin_field(Collections.CONFIGURATIONS)
 update_plugin_field(Collections.ITSM_CONFIGURATIONS)
 
-
+# create tenants for CTE Netskope configurations
 for configuration in connector.collection(Collections.CONFIGURATIONS).find({}):
-    if configuration.get("plugin") not in [
-        "netskope.plugins.Default.netskope.main",
-        "netskope.plugins.Default.netskope_itsm.main",
-    ]:
+    if configuration.get("plugin") != "netskope.plugins.Default.netskope.main":
         continue
+    if configuration.get("tenant") is not None:  # already new configuration
+        continue
+    params = configuration.get("parameters", {})
+    tenant, token = params.get("tenant_name"), params.get("api_token")
+    tenant_config = connector.collection(
+        Collections.NETSKOPE_TENANTS
+    ).find_one({"tenantName": tenant})
+    if tenant_config is None:  # does not exist; create it
+        tenant_config = TenantIn(name=tenant, tenantName=tenant, token=token)
+        loop.run_until_complete(create_tenant(tenant_config))
+        tenant_config = tenant_config.dict()
+    connector.collection(Collections.CONFIGURATIONS).update_one(
+        {"name": configuration.get("name")},
+        {"$set": {"tenant": tenant_config.get("name")}},
+    )
 
+# create tenants for CTO Netskope configurations
+for configuration in connector.collection(
+    Collections.ITSM_CONFIGURATIONS
+).find({}):
+    if (
+        configuration.get("plugin")
+        != "netskope.plugins.Default.netskope_itsm.main"
+    ):
+        continue
+    if configuration.get("tenant") is not None:  # already new configuration
+        continue
+    params = configuration.get("parameters", {}).get("auth", {})
+    tenant, token = params.get("tenant_name"), params.get("token")
+    tenant_config = connector.collection(
+        Collections.NETSKOPE_TENANTS
+    ).find_one({"tenantName": tenant})
+    if tenant_config is None:  # does not exist; create it
+        tenant_config = TenantIn(name=tenant, tenantName=tenant, token=token)
+        loop.run_until_complete(create_tenant(tenant_config))
+        tenant_config = tenant_config.dict()
+    connector.collection(Collections.CONFIGURATIONS).update_one(
+        {"name": configuration.get("name")},
+        {"$set": {"tenant": tenant_config.get("name")}},
+    )
 
 print("Successfully migrated database to version 2.0.0")

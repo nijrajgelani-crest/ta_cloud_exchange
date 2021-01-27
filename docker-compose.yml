@@ -54,15 +54,14 @@ services:
     labels:
       - com.centurylinklabs.watchtower.enable=true
   watchtower:
-    image: containrrr/watchtower
+    image: containrrr/watchtower:1.0.3
     volumes:
       - /var/run/docker.sock:/var/run/docker.sock
-      - /root/.docker/config.json:/config.json
+    # - /root/.docker/config.json:/config.json  # uncomment this line if repo requires authentication
     environment:
       - WATCHTOWER_HTTP_API=true
       - WATCHTOWER_HTTP_API_TOKEN=token
       - WATCHTOWER_LABEL_ENABLE=true
-      - WATCHTOWER_MONITOR_ONLY=true
     ports:
       - 8080:8080
     command: --interval 30
