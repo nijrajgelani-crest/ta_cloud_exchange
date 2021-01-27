@@ -4,12 +4,7 @@ set -e
 MOUNT_PATH=`grep "/data/db:z" docker-compose.yml`
 MONGO_DIR=`docker exec -ti core python -c 'import sys; print(sys.argv[1].strip().split(":")[0][1:].strip(), end="")' "${MOUNT_PATH}"`
 
-if [ -z "$1" ]; then
-    echo "Path to previous docker-compose dir passed"
-    PREVIOUS_MOUNT_PATH=`grep "/data/db:z" $1/docker-compose.yml`
-    PREVIOUS_MONGO_DIR=`docker exec -ti core python -c 'import sys; print(sys.argv[1].strip().split(":")[0][1:].strip(), end="")' "${MOUNT_PATH}"`
-    echo $PREVIOUS_MONGO_PATH
-elif [ ! -d "$MONGO_DIR" ]; then
+if [ ! -d "$MONGO_DIR" ]; then
     echo "Stopping running containers"
     docker stop core ui mongodb
     echo "Extracting databse from existing container"
