@@ -174,7 +174,7 @@ for rule in connector.collection(Collections.ITSM_BUSINESS_RULES).find({}):
                 continue
             item["mappings"] = config.get("mappings", [])
     connector.collection(Collections.ITSM_BUSINESS_RULES).update_one(
-        {"name", rule.get("name")},
+        {"name": rule.get("name")},
         {"$set": {"queues": rule.get("queues", {})}},
     )
 
