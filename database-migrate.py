@@ -95,6 +95,11 @@ connector.collection(Collections.SCHEDULES).update_many(
 )
 
 
+connector.collection(Collections.USERS).update_many(
+    {}, {"$set": {"sso": False}},
+)
+
+
 def update_plugin_field(collection):
     """Update plugin field values to match new format."""
     for configuration in connector.collection(collection).find({}):
