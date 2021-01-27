@@ -26,5 +26,8 @@ else
     docker rm -f core ui
     docker-compose pull core ui
     docker-compose up -d
+    echo "Migrating database schema"
+    docker cp database-migrate.py core:/opt
+    docker exec -ti core python /opt/database-migrate.py
     echo "Containers updated successfully"
 fi
