@@ -100,6 +100,28 @@ connector.collection(Collections.USERS).update_many(
 )
 
 
+connector.collection(Collections.CONFIGURATIONS).update_many(
+    {"plugin": "CrowdStrike"}, {"$set": {"plugin": "crowdstrike"}}
+)
+
+for config in connector.collection(Collections.CONFIGURATIONS).find(
+    {"$not": {"tenant": None}}
+):
+    name = config.get("name")
+    connector.collection(Collections.SCHEDULES).delete_one(
+        {"args": {"$in": [name]}}
+    )
+
+
+for config in connector.collection(Collections.ITSM_CONFIGURATIONS).find(
+    {"$not": {"tenant": None}}
+):
+    name = config.get("name")
+    connector.collection(Collections.SCHEDULES).delete_one(
+        {"args": {"$in": [name]}}
+    )
+
+
 def update_plugin_field(collection):
     """Update plugin field values to match new format."""
     for configuration in connector.collection(collection).find({}):
