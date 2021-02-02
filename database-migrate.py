@@ -92,6 +92,22 @@ connector.collection(Collections.CONFIGURATIONS).update_many(
     {"plugin": "CrowdStrike"}, {"$set": {"plugin": "crowdstrike"}}
 )
 
+connector.collection(Collections.CONFIGURATIONS).update_many(
+    {"plugin": "carbon_black"},
+    {
+        "$set": {
+            "parameters.reputation": [
+                "NOT_LISTED",
+                "PUP",
+                "SUSPECT_MALWARE",
+                "COMPANY_BLACK_LIST",
+                "KNOWN_MALWARE",
+            ],
+            "parameters.enable_tagging": "yes",
+        }
+    },
+)
+
 
 def update_plugin_field(collection):
     """Update plugin field values to match new format."""
