@@ -1,18 +1,6 @@
 """CTE to CE migration script.
 
-Run this script after upgrading the Core and UI containers from CTE 1.0.0/2.0.x
-to CE 3.0.0.
-
-- When upgrading containers, make sure to not delete the `mongodb` container.
-- Explicitly specify names of the `core` and `ui` containers to remove them as
-  without using the names all 3 of the containers will be removed. 
-
-
-> docker-compose rm core ui
-> docker-compose pull core ui
-> docker-compose up -d
-> docker cp migrate.py core:/opt
-> docker exec -ti core python /opt/migrate.py
+Do not execute this manually. Use migrate.sh
 """
 import asyncio
 
@@ -141,7 +129,13 @@ for configuration in connector.collection(Collections.CONFIGURATIONS).find({}):
         tenant_config = tenant_config.dict()
     connector.collection(Collections.CONFIGURATIONS).update_one(
         {"name": configuration.get("name")},
-        {"$set": {"tenant": tenant_config.get("name")}},
+        {
+            "$set": {
+                "tenant": tenant_config.get("name"),
+                "pollInterval": 60,
+                "pollIntervalUnit": "minutes",
+            }
+        },
     )
 
 # create tenants for CTO Netskope configurations
@@ -166,7 +160,13 @@ for configuration in connector.collection(
         tenant_config = tenant_config.dict()
     connector.collection(Collections.ITSM_CONFIGURATIONS).update_one(
         {"name": configuration.get("name")},
-        {"$set": {"tenant": tenant_config.get("name")}},
+        {
+            "$set": {
+                "tenant": tenant_config.get("name"),
+                "pollInterval": 60,
+                "pollIntervalUnit": "minutes",
+            }
+        },
     )
 
 

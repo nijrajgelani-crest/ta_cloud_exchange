@@ -1,4 +1,18 @@
 #!/bin/bash
+#
+# Prerequisites for migration:
+#  - Previous version of core, ui, and mongodb containers should be running
+#  - Current working directory should be the one with the docker-compose.yml
+#  - Mongo mount path specified in the docker-compose.yml should be a
+#    non-existent directory.
+#
+# Executing the script:
+#  > chmod +x migrate.sh
+#  > ./migrate.sh
+#
+# Notes:
+#  - After migration, all the Netskope plugins would default to poll interval
+#    of 60 minutes. Update this manually from UI if necessary.
 
 set -e
 MOUNT_PATH=`grep "/data/db:z" docker-compose.yml`
