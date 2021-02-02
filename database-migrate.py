@@ -104,6 +104,7 @@ def update_plugin_field(collection):
                 "$set": {
                     "plugin": f"netskope.plugins.Default.{configuration.get('plugin')}.main",
                     "tenant": None,
+                    "lockedAt": None,
                 }
             },
         )
