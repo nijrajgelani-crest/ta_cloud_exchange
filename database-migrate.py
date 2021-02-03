@@ -109,6 +109,21 @@ connector.collection(Collections.CONFIGURATIONS).update_many(
 )
 
 
+connector.collection(Collections.CONFIGURATIONS).update_many(
+    {
+        "plugin": "netskope",
+        "parameters.default_file_hash": None,
+        "parameters.default_url": None,
+    },
+    {
+        "$set": {
+            "parameters.default_file_hash": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
+            "parameters.default_url": "default_ce_domain.io",
+        }
+    },
+)
+
+
 def update_plugin_field(collection):
     """Update plugin field values to match new format."""
     for configuration in connector.collection(collection).find({}):
