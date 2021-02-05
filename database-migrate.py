@@ -118,7 +118,7 @@ connector.collection(Collections.CONFIGURATIONS).update_many(
     {
         "$set": {
             "parameters.default_file_hash": "ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff",
-            "parameters.default_url": "default_ce_domain.io",
+            "parameters.default_url": "ctedefaultpush.io",
         }
     },
 )
