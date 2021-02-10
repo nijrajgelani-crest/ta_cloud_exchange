@@ -93,6 +93,10 @@ connector.collection(Collections.CONFIGURATIONS).update_many(
 )
 
 connector.collection(Collections.CONFIGURATIONS).update_many(
+    {"plugin": "cybereason_plugin"}, {"$set": {"plugin": "cybereason"}}
+)
+
+connector.collection(Collections.CONFIGURATIONS).update_many(
     {"plugin": "carbon_black"},
     {
         "$set": {
