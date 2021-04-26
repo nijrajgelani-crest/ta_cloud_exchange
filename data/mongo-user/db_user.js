@@ -49,6 +49,18 @@ db.schedules.insert({
 
 db.schedules.insert({
     _cls: "PeriodicTask",
+    name: "INTERNAL LOG CLEANUP TASK",
+    enabled: true,
+    args: [],
+    task: "cre.delete_logs",
+    interval: {
+        every: 12,
+        period: "hours",
+    },
+})
+
+db.schedules.insert({
+    _cls: "PeriodicTask",
     name: "INTERNAL UPDATE TASK",
     enabled: true,
     args: [],
