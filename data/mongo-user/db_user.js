@@ -37,6 +37,18 @@ db.schedules.insert({
 
 db.schedules.insert({
     _cls: "PeriodicTask",
+    name: "CRE INTERNAL UNMUTE TASK",
+    enabled: true,
+    args: [],
+    task: "cre.unmute",
+    interval: {
+        every: 5,
+        period: "minutes",
+    },
+})
+
+db.schedules.insert({
+    _cls: "PeriodicTask",
     name: "INTERNAL ALERT CLEANUP TASK",
     enabled: true,
     args: [],
