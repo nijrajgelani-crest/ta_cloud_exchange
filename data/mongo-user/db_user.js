@@ -49,6 +49,18 @@ db.schedules.insert({
 
 db.schedules.insert({
     _cls: "PeriodicTask",
+    name: "CRE AVERAGE NORMALIZED SCORE TASH",
+    enabled: true,
+    args: [],
+    task: "cre.calculate_aggregate",
+    interval: {
+        every: 24,
+        period: "hours",
+    },
+})
+
+db.schedules.insert({
+    _cls: "PeriodicTask",
     name: "INTERNAL ALERT CLEANUP TASK",
     enabled: true,
     args: [],
