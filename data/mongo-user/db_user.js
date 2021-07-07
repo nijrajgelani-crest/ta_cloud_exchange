@@ -123,7 +123,7 @@ db.users.insert({
     firstLogin: true
 });
 
-db.cls_mapping_files.insert_many([
+db.cls_mapping_files.insertMany([
   {
     name: "azure_sentinel_map.json",
     json_data:
