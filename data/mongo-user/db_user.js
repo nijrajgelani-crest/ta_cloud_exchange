@@ -103,7 +103,7 @@ db.settings.insert({
         password: ""
     },
     logLevel: "info",
-    databaseVersion: "2.0.0",
+    databaseVersion: "3.0.0",
     alertCleanup: 7,
     platforms: {
         cte: false,
@@ -133,4 +133,4 @@ db.cls_mapping_files.insertMany([{
     "isDefault": true
 }]);
 
-db.cls_business_rules.insertOne({ "name": "All", "filters": { "query": "alert_type IN (\"anomaly\", \"compromisedCrendential\", \"policy\", \"legalHold\", \"malsite\", \"malware\", \"dlp\", \"securityAssessment\", \"watchlist\", \"quarantine\", \"remediation\", \"uba\") && event_type IN (\"page\", \"audit\", \"application\", \"infrastructure\", \"network\")", "mongo": "{\"alert_type\":{\"$in\":[\"anomaly\",\"compromisedCrendential\",\"policy\",\"legalHold\",\"malsite\",\"malware\",\"dlp\",\"securityAssessment\",\"watchlist\",\"quarantine\",\"remediation\",\"uba\"]},\"event_type\":{\"$in\":[\"page\",\"audit\",\"application\",\"infrastructure\",\"network\"]}}" }, "muteRules": [], "muted": false, "unmuteAt": null, "siemMappings": {} })
+db.cls_business_rules.insert({ "name": "All", "filters": { "query": "alert_type IN (\"anomaly\", \"compromisedCrendential\", \"policy\", \"legalHold\", \"malsite\", \"malware\", \"dlp\", \"securityAssessment\", \"watchlist\", \"quarantine\", \"remediation\", \"uba\") && event_type IN (\"page\", \"audit\", \"application\", \"infrastructure\", \"network\")", "mongo": "{\"alert_type\":{\"$in\":[\"anomaly\",\"compromisedCrendential\",\"policy\",\"legalHold\",\"malsite\",\"malware\",\"dlp\",\"securityAssessment\",\"watchlist\",\"quarantine\",\"remediation\",\"uba\"]},\"event_type\":{\"$in\":[\"page\",\"audit\",\"application\",\"infrastructure\",\"network\"]}}" }, "muteRules": [], "muted": false, "unmuteAt": null, "siemMappings": {} })
