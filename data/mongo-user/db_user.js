@@ -95,6 +95,18 @@ db.schedules.insert({
     },
 })
 
+db.schedules.insert({
+    _cls: "PeriodicTask",
+    name: "SYSTEM LOG CLEANUP TASK",
+    enabled: true,
+    args: [],
+    task: "common.delete_logs",
+    interval: {
+        every: 12,
+        period: "hours",
+    },
+})
+
 db.settings.insert({
     proxy: {
         scheme: "http",
