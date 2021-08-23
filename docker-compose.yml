@@ -24,7 +24,7 @@ services:
     ports:
       - '27017:27017'
   core:
-    image: localhost:5000/cte:core-dev
+    image: docker.io/crestsystems/netskope:core-latest-dev
     volumes:
       - ./data/custom_plugins:/opt/netskope/plugins/custom_plugins:z
       - /var/run/docker.sock:/var/run/docker.sock
@@ -44,7 +44,7 @@ services:
     labels:
       - com.centurylinklabs.watchtower.enable=true
   ui:
-    image: localhost:5000/cte:ui-dev
+    image: docker.io/crestsystems/netskope:ui-latest-dev
     restart: on-failure:5
     volumes:
       - ./data/ssl_certs:/tmp/ssl_certs:z
