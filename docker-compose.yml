@@ -37,6 +37,8 @@ services:
       - DOCKER_USERNAME=DOCKER_USERNAME
       - DOCKER_PASSWORD=DOCKER_PASSWORD
       - WATCHTOWER_HTTP_API_TOKEN=token
+      - ANALYTICS_BASE_URL=http://localhost
+      - ANALYTICS_TOKEN=eyJ0eXAiOiJKV1QiLCJhbGciOiJIUzI1NiJ9.eyJpbnN0YWxsYXRpb25faWQiOiJjMDAyIn0.w8SVrTcDjk8PkR4IcbWGwOyf6-OWfCUyOoCTgZvqHqc
     restart: on-failure:5
     depends_on:
       - mongodb-primary

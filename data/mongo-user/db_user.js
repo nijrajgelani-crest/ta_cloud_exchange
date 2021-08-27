@@ -25,6 +25,18 @@ db.schedules.insert({
 
 db.schedules.insert({
     _cls: "PeriodicTask",
+    name: "INTERNAL ANALYTICS TASK",
+    enabled: true,
+    args: [],
+    task: "common.share_usage_analytics",
+    interval: {
+        every: 24,
+        period: "hours",
+    },
+})
+
+db.schedules.insert({
+    _cls: "PeriodicTask",
     name: "INTERNAL UNMUTE TASK",
     enabled: true,
     args: [],
