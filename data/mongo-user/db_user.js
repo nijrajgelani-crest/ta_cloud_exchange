@@ -25,6 +25,18 @@ db.schedules.insert({
 
 db.schedules.insert({
     _cls: "PeriodicTask",
+    name: "INTERNAL ANALYTICS TASK",
+    enabled: true,
+    args: [],
+    task: "common.share_usage_analytics",
+    interval: {
+        every: 24,
+        period: "hours",
+    },
+})
+
+db.schedules.insert({
+    _cls: "PeriodicTask",
     name: "INTERNAL UNMUTE TASK",
     enabled: true,
     args: [],
@@ -103,7 +115,7 @@ db.settings.insert({
         password: ""
     },
     logLevel: "info",
-    databaseVersion: "2.0.0",
+    databaseVersion: "3.0.0",
     alertCleanup: 7,
     platforms: {
         cte: false,
@@ -122,3 +134,15 @@ db.users.insert({
     tokens: [],
     firstLogin: true
 });
+
+db.cls_mapping_files.insertMany([{
+    "name": "Azure Sentinel Mappings",
+    "jsonData": "{\n    \"sentinel_map_version\": \"2.0.0\",\n    \"taxonomy\": {\n        \"alerts\": {\n            \"anomaly\": [],\n            \"dlp\": [],\n            \"malware\": [],\n            \"policy\": [],\n            \"Compromised Credential\": [],\n            \"Legal Hold\": [],\n            \"Malsite\": [],\n            \"Quarantine\": [],\n            \"Remediation\": [],\n            \"Security Assessment\": [],\n            \"Watchlist\": [],\n            \"uba\": []\n        },\n        \"events\": {\n            \"application\": [],\n            \"audit\": [],\n            \"infrastructure\": [],\n            \"page\": [],\n            \"network\": []\n        }\n    }\n}",
+    "isDefault": true
+}, {
+    "name": "CSCC Default Mappings",
+    "jsonData": "{\n    \"cscc_map_version\": \"2.0.0\",\n    \"taxonomy\": {\n        \"alerts\": {\n            \"anomaly\": [],\n            \"dlp\": [],\n            \"malware\": [],\n            \"policy\": [],\n            \"Compromised Credential\": [],\n            \"Legal Hold\": [],\n            \"Malsite\": [],\n            \"Quarantine\": [],\n            \"Remediation\": [],\n            \"Security Assessment\": [],\n            \"Watchlist\": [],\n            \"uba\": []\n        },\n        \"events\": {\n            \"application\": [],\n            \"audit\": [],\n            \"infrastructure\": [],\n            \"page\": [],\n            \"network\": []\n        }\n    }\n}",
+    "isDefault": true
+}]);
+
+db.cls_business_rules.insert({ "name": "All", "filters": { "query": "alert_type IN (\"anomaly\", \"compromisedCrendential\", \"policy\", \"legalHold\", \"malsite\", \"malware\", \"dlp\", \"securityAssessment\", \"watchlist\", \"quarantine\", \"remediation\", \"uba\") || event_type IN (\"page\", \"application\", \"audit\", \"infrastructure\", \"network\")", "mongo": "{\"$or\":[{\"alert_type\":{\"$in\":[\"anomaly\",\"compromisedCrendential\",\"policy\",\"legalHold\",\"malsite\",\"malware\",\"dlp\",\"securityAssessment\",\"watchlist\",\"quarantine\",\"remediation\",\"uba\"]}},{\"event_type\":{\"$in\":[\"page\",\"application\",\"audit\",\"infrastructure\",\"network\"]}}]}" }, "muteRules": [], "muted": false, "unmuteAt": null, "siemMappings": {} })
