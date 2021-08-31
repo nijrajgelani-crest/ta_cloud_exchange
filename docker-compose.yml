@@ -48,6 +48,8 @@ services:
   ui:
     image: docker.io/crestsystems/netskope:ui-latest-dev
     restart: on-failure:5
+    environment:
+      - CE_API_URL=http://core
     volumes:
       - ./data/ssl_certs:/tmp/ssl_certs:z
     ports:
