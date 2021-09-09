@@ -7,6 +7,8 @@ services:
       - RABBITMQ_NODE_NAME=rabbit@rabbitmq-stats
       - RABBITMQ_ERL_COOKIE=s3cr3tc00ki3
       - RABBITMQ_SECURE_PASSWORD=yes
+    volumes:
+      - ./data/rabbitmq/custom.conf:/bitnami/rabbitmq/conf/custom.conf:z
     ports:
       - '15672:15672'
       - '5672:5672'
@@ -14,7 +16,6 @@ services:
     image: docker.io/bitnami/mongodb:4.4
     volumes:
       - ./data/mongo-data:/bitnami/mongodb:z
-      - ./data/mongo-user:/docker-entrypoint-initdb.d:z
     environment:
       - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
       - MONGODB_ROOT_PASSWORD=password123
