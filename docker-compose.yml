@@ -13,9 +13,9 @@ services:
       - '15672:15672'
       - '5672:5672'
   mongodb-primary:
-    image: docker.io/bitnami/mongodb:4.4
+    image: docker.io/bitnami/mongodb:5.0
     volumes:
-      - ./data/mongo-data:/bitnami/mongodb:z
+      - ./data/mongo-data:/bitnami/mongodb/data/db:z
     environment:
       - MONGODB_ADVERTISED_HOSTNAME=mongodb-primary
       - MONGODB_ROOT_PASSWORD=password123
@@ -25,7 +25,7 @@ services:
     ports:
       - '27017:27017'
   core:
-    image: docker.io/crestsystems/netskope:core-latest-dev
+    image: docker.io/crestsystems/netskope:core-latest
     volumes:
       - ./data/custom_plugins:/opt/netskope/plugins/custom_plugins:z
       - /var/run/docker.sock:/var/run/docker.sock
@@ -47,7 +47,7 @@ services:
     labels:
       - com.centurylinklabs.watchtower.enable=true
   ui:
-    image: docker.io/crestsystems/netskope:ui-latest-dev
+    image: docker.io/crestsystems/netskope:ui-latest
     restart: on-failure:5
     environment:
       - CE_API_URL=http://core
