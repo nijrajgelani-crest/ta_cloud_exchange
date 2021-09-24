@@ -13,7 +13,7 @@ services:
       - '15672:15672'
       - '5672:5672'
   mongodb-primary:
-    image: docker.io/bitnami/mongodb:5.0
+    image: docker.io/bitnami/mongodb:4.4
     volumes:
       - ./data/mongo-data:/bitnami/mongodb/data/db:z
     environment:
