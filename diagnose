@@ -100,8 +100,8 @@ out_ce_logs() {
   OUT="ce_platform_logs.log"
   if [ -z "$TOKEN" ]; 
   then
-    echo "==> Error while collecting CE Version. Check hostname, username, or password." > /dev/tty
-    echo "Error while collecting CE Version. Check hostname, username, or password." > $OUT
+    echo "==> Error while collecting CE Logs. Check hostname, username, or password." > /dev/tty
+    echo "Error while collecting CE Logs. Check hostname, username, or password." > $OUT
   else
     curl -s -X 'GET' \
       "$HOST/api/logs/?skip=0&limit=10&ascending=true&aggregate=false&filters=%7B%7D&download=true" \
@@ -149,7 +149,7 @@ if [ $? -eq 127 ]; then
 fi
 
 # Take inputs from user
-read -p "Enter Host name (e.g. https://<host-name>:<port>): " HOST
+read -p "Enter CE Host name (e.g. http(s)://<host-name>:<port>): " HOST
 read -p "Enter CE Admin Username: " USERNAME
 read -sp "Enter CE Admin Password: " PASSWORD
 echo ""
@@ -167,7 +167,8 @@ done
 
 # create zip file
 echo "----- Creating zip file -----"
-OUT="`date`.zip"
+OUT="`date | tr " " "_"`.zip"
+
 zip -r "$OUT" ${outputs[@]}
 echo $OUT
 
