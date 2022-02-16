@@ -24,7 +24,7 @@ DEFAULT_INPUTS = {
     "MAINTENANCE_PASSWORD": {
         "default": "",
         "skip": False,
-        "help": "Enter maintenance password that will be used for docker services",
+        "help": "Enter maintenance password that will be used for docker services. This password can be set only once.",
         "mandatory": True,
     },
     "WATCHTOWER_TOKEN": {"default": "token", "skip": True, "help": ""},
@@ -161,9 +161,9 @@ def run():
         for key, item in DEFAULT_INPUTS.items():
             data = ""
             if not item["skip"]:
-                if item["help"]:
-                    print(item["help"])
                 if key not in AVAILABLE_INPUTS:
+                    if item["help"]:
+                        print(item["help"])
                     if item.get("mandatory", False):
                         data = input(f"> Enter {key} (Required): ")
                     else:
@@ -171,9 +171,12 @@ def run():
                             f"> Enter {key} (Default: \"{item['default']}\"): "
                         )
                 else:
-                    data = input(
-                        f'> Enter {key} (Current: "{AVAILABLE_INPUTS[key]}"): '
-                    )
+                    if key != "MAINTENANCE_PASSWORD":
+                        if item["help"]:
+                            print(item["help"])
+                        data = input(
+                            f'> Enter {key} (Current: "{AVAILABLE_INPUTS[key]}"): '
+                        )
                 print("")
             data = data.strip() if isinstance(data, str) else data
             if not data:
