@@ -2,6 +2,7 @@
 import os
 import subprocess
 import platform
+import urllib.parse
 
 DEFAULT_INPUTS = {
     "BETA_OPT_IN": {
@@ -26,6 +27,11 @@ DEFAULT_INPUTS = {
         "skip": False,
         "help": "Enter maintenance password that will be used for docker services. This password can be set only once.",
         "mandatory": True,
+    },
+    "MAINTENANCE_PASSWORD_ESCAPED": {
+        "default": "",
+        "skip": True,
+        "help": "Enter maintenance password that will be used for docker services. This password can be set only once.",
     },
     "WATCHTOWER_TOKEN": {"default": "token", "skip": True, "help": ""},
     "DOCKER_USERNAME": {"default": "", "skip": True, "help": ""},
@@ -189,6 +195,10 @@ def run():
                 while data == "":
                     print(f"{key} can not be empty")
                     data = input(f"> Enter {key}: ").strip()
+            if key == "MAINTENANCE_PASSWORD_ESCAPED":
+                data = urllib.parse.quote_plus(
+                    AVAILABLE_INPUTS["MAINTENANCE_PASSWORD"]
+                )
             if key == "BETA_OPT_IN":
                 if data.lower() in ["y", "yes"]:
                     AVAILABLE_INPUTS["CORE_TAG"] = CORE_BETA_DEFAULT
