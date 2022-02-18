@@ -26,8 +26,7 @@ DEFAULT_INPUTS = {
     "MAINTENANCE_PASSWORD": {
         "default": "",
         "skip": False,
-        "help": "Enter maintenance password that will be used for docker services. \n "
-        "Warning: This password can be set only once. It is recommended to take an external backup of the .env file located in this directory.",
+        "help": "Enter maintenance password that will be used for docker services. This password can be set only once. ",
         "mandatory": True,
     },
     "MAINTENANCE_PASSWORD_ESCAPED": {
@@ -224,6 +223,10 @@ def run():
         print("\nSetup completed successfull...\n")
     except Exception as e:
         print(e)
+
+    print(
+        "\nWarning: It is recommended to take an external backup of the .env file located in this directory."
+    )
 
 
 if __name__ == "__main__":
