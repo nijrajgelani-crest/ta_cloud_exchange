@@ -3,6 +3,7 @@ import os
 import subprocess
 import platform
 import urllib.parse
+import time
 
 DEFAULT_INPUTS = {
     "BETA_OPT_IN": {
@@ -25,7 +26,8 @@ DEFAULT_INPUTS = {
     "MAINTENANCE_PASSWORD": {
         "default": "",
         "skip": False,
-        "help": "Enter maintenance password that will be used for docker services. This password can be set only once.",
+        "help": "Enter maintenance password that will be used for docker services. \n "
+        "Warning: This password can be set only once. It is recommended to take an external backup of the .env file located in this directory.",
         "mandatory": True,
     },
     "MAINTENANCE_PASSWORD_ESCAPED": {
@@ -73,9 +75,12 @@ def create_env_if_not_exist():
 def get_all_existed_env_variable():
     try:
         with open(".env", "r") as f:
-            for line in f.readlines():
-                key, value = line.split("=")
-                AVAILABLE_INPUTS[key] = value.strip()
+            if os.stat(".env").st_size > 0:
+                with open(f".env.{int(time.time())}", "w+") as backup:
+                    for line in f.readlines():
+                        backup.write(line)
+                        key, value = line.split("=")
+                        AVAILABLE_INPUTS[key] = value.strip()
     except Exception as e:
         raise Exception(f"Error occured while getting env variables: {e}")
 
