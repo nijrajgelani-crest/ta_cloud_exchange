@@ -1,7 +1,7 @@
 version: "3.3"
 services:
   rabbitmq-stats:
-    image: index.docker.io/bitnami/rabbitmq:3.8
+    image: index.docker.io/bitnami/rabbitmq:3.9
     environment:
       - RABBITMQ_NODE_TYPE=stats
       - RABBITMQ_NODE_NAME=rabbit@rabbitmq-stats
